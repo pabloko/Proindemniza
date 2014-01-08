@@ -1,25 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+ <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <title></title>
-  
-  
-  
-  <link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
-  
-  <!-- Extra Codiqa features -->
+  <title>Proindemniza</title>
+  <link rel="stylesheet" href="jquery.mobile-1.3.1.min.css">
   <link rel="stylesheet" href="codiqa.ext.css">
-  
   <!-- jQuery and jQuery Mobile -->
-  <script src="https://d10ajoocuyu32n.cloudfront.net/jquery-1.9.1.min.js"></script>
-  <script src="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
-
+  <script src="jquery-1.9.1.min.js"></script>
+  <script src="jquery.mobile-1.3.1.min.js"></script>
   <!-- Extra Codiqa features -->
-  <script src="https://d10ajoocuyu32n.cloudfront.net/codiqa.ext.js"></script>
+  <script src="codiqa.ext.js"></script>
   
   <style type="text/css">
     input.ui-slider-input {
@@ -319,6 +312,20 @@
 			if (confirm("¿Está seguro?"))
 				$('#calculadora-form').submit();
 		});*/
+
+        $('#btn-server').click(function () {
+            $('#datainput').val($('#indemnizacion').html());
+            var data = $('#formulario-consulta').serialize();
+            $.post('http://www.proindemniza.com/webapp/server.php', data)
+                .success(function(result){
+                    $('#formulario-consulta').html('<h2>'+result+'</h2>');
+                })
+                .error(function(){
+                    console.log('Error loading page');
+                })
+            return false;
+
+        });
 		
 	});
   </script>
@@ -543,8 +550,9 @@
 
 
         <div data-role="collapsible-set" data-theme="c"  style="margin:0;">
-            <div data-role="collapsible">
+            <div id="indemnizacion"><div data-role="collapsible">
                 <h3>Tabla detallada</h3>
+
   <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td width="60%" style="border-bottom:1px solid #000;">BAJA</td>
@@ -587,7 +595,7 @@
     <td width="20%" align="right" style="border-bottom:3px solid #000;" id="gast">1000.77€</td>
   </tr>
 </table>
-</div>
+
 </div>
 <table width="100%" border="0" cellspacing="2" cellpadding="2"  style="margin:0;">
   <tr>
@@ -595,7 +603,8 @@
     <td colspan="2" align="right"><h2 id="tot">12000€</h2></td>
   </tr>
 </table>
-
+</div>
+</div>
             <fieldset>
             <center>
             
@@ -632,13 +641,71 @@
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
-                            <a href="#page1" data-transition="fade" data-theme="c" data-icon="bars">
+                            <a href="#page3" id="copydata" data-transition="fade" data-theme="c" data-icon="bars">
                                 Solicitar informe
                             </a>
                         </li>
                         <li>
                             <a href="#page1" data-transition="fade" data-theme="c" data-icon="back">
                                 Recalcular
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+<div data-role="page" id="page3">
+<div data-theme="c" data-role="header">
+        <center><img src="indemnizia.png" width="40%" style="margin:10px;" /></center>
+    </div>
+    <div data-role="content">
+
+            <form id="formulario-consulta">
+
+
+                <h5><center>
+                    Desde Proindemniza realizaremos un estudio detallado de su caso y le brindaremos cobertura legal de forma ágil, personalizada y directa.<br />
+                    Rellene el siguiente formulario y nos pondremos en contacto con vd. sin compromiso alguno.
+                </center></h5>
+
+            <div data-role="fieldcontain">
+              
+                    <label for="textinput1">
+                                Nombre
+                            </label>
+                    <input name="nombre" id="textinput1" placeholder="Nombre" value="" type="text" data-mini="true">
+                </div>
+                <div data-role="fieldcontain">
+                   <label for="textinput2">
+                                Email
+                            </label>
+                    <input name="email" id="textinput2" placeholder="Email" value="" type="email" data-mini="true">
+                </div>
+                <div data-role="fieldcontain">
+                   <label for="textinput3">
+                                Teléfono
+                            </label>
+                    <input name="telefono" id="textinput3" placeholder="Teléfono" value="" type="tel" data-mini="true">
+                </div>
+                
+                <!--input type="submit" value="Enviar" data-mini="true"-->
+                <input type="hidden" name="botty" value="" />
+                <input type="hidden" name="tipo" value="contacto" />
+                <input type="hidden" name="data" value="contacto" id="datainput" />
+
+              </form>
+
+        
+        
+         <div data-theme="a" data-role="footer" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#page3" id="btn-server" data-transition="fade" data-theme="c" data-icon="bars">
+                                Solicitar informe sin compromiso
                             </a>
                         </li>
                     </ul>

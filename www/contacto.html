@@ -1,25 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+ <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <title></title>
-  
-  
-  
-  <link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
-  
-  <!-- Extra Codiqa features -->
+  <title>Proindemniza</title>
+  <link rel="stylesheet" href="jquery.mobile-1.3.1.min.css">
   <link rel="stylesheet" href="codiqa.ext.css">
-  
   <!-- jQuery and jQuery Mobile -->
-  <script src="https://d10ajoocuyu32n.cloudfront.net/jquery-1.9.1.min.js"></script>
-  <script src="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
-
+  <script src="jquery-1.9.1.min.js"></script>
+  <script src="jquery.mobile-1.3.1.min.js"></script>
   <!-- Extra Codiqa features -->
-  <script src="https://d10ajoocuyu32n.cloudfront.net/codiqa.ext.js"></script>
+  <script src="codiqa.ext.js"></script>
    <style type="text/css">
     /*.ui-page {
         background : url(fondo.png) no-repeat center center;
@@ -35,7 +28,21 @@
   <script>
   //
     $( document ).ready(function() {
-		//$('h5').html(App.getPhoneNumber());
+
+
+        $('#formulario-contacto').submit(function(event){
+            var data = $(this).serialize();
+            $.post('http://www.proindemniza.com/webapp/server.php', data)
+                .success(function(result){
+                    $('#formulario-contacto').html('<h2>'+result+'</h2>');
+                })
+                .error(function(){
+                    console.log('Error loading page');
+                })
+            return false;
+        });
+
+
 	});
   </script>
 </head>
@@ -52,34 +59,65 @@
 				<div data-role="fieldcontain">
             Procuramos una atención personalizada, ágil, transparente, eficaz y global a todas las necesidades jurídicas del cliente. Tenemos una dilatada experiencia de más de diez años en el mundo jurídico.
             
-            <h4 name="">944352048 </br> 656795124 </br> 676461482 </br> consultas@indemnizia.com</h4>
+            
+                  <ul data-role="listview" data-divider-theme="c" data-inset="true">
+                      <li data-role="list-divider" role="heading">
+                          Teléfonos
+                      </li>
+                      <li data-theme="">
+                          <a href="tel:944352048" data-transition="slide">
+                              944352048
+                          </a>
+                      </li>
+                      <li data-theme="c">
+                          <a href="tel:656795124" data-transition="slide">
+                              656795124
+                          </a>
+                      </li>
+                      <li data-theme="c">
+                          <a href="tel:676461482" data-transition="slide">
+                              676461482
+                          </a>
+                      </li>
+                      <li data-role="list-divider" role="heading">
+                          Email
+                      </li>
+                      <li data-theme="c">
+                          <a href="mailto:consultas@proindemniza.com" data-transition="slide">
+                              consultas@proindemniza.com
+                          </a>
+                      </li>
+                  </ul>
+
         </div>
 		
-        <a data-role="button" href="tel:944352048" data-icon="grid" data-iconpos="left">
-            Llámanos
-        </a>
+       
         
         <h3>Envienos un email</h3>
 			</center>
+       <form id="formulario-contacto">
 		<div data-role="fieldcontain">
             <label for="textinput1">
                         Nombre
                     </label>
-            <input name="" id="textinput1" placeholder="Nombre" value="" type="text" data-mini="true">
+            <input name="nombre" id="textinput1" placeholder="Nombre" value="" type="text" data-mini="true">
         </div>
         <div data-role="fieldcontain">
            <label for="textinput2">
                         Email
                     </label>
-            <input name="" id="textinput2" placeholder="Email" value="" type="email" data-mini="true">
+            <input name="email" id="textinput2" placeholder="Email" value="" type="email" data-mini="true">
         </div>
         <div data-role="fieldcontain">
             <label for="textarea1">
                         Mensaje
                     </label>
-            <textarea name="" id="textarea1" placeholder="Mensaje" data-mini="true"></textarea>
+            <textarea name="mensaje" id="textarea1" placeholder="Mensaje" data-mini="true"></textarea>
         </div>
         <input type="submit" value="Enviar" data-mini="true">
+        <input type="hidden" name="botty" value="" />
+        <input type="hidden" name="tipo" value="contacto" />
+      </form>
         </div>
         
     </div>
