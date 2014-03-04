@@ -27,6 +27,9 @@
   
   <script>
     $( document ).ready(function() {
+
+
+
 		//caso1
 		$( "#secuelas1" ).bind( "change", function(event, ui) {
 			switch ($("#secuelas1").val()) {
@@ -315,7 +318,9 @@
 
         $('#btn-server').click(function () {
             $('#datainput').val($('#indemnizacion').html());
+            
             var data = $('#formulario-consulta').serialize();
+            /*
             $.post('http://www.proindemniza.com/webapp/server.php', data)
                 .success(function(result){
                     $('#formulario-consulta').html('<h2>'+result+'</h2>');
@@ -323,6 +328,20 @@
                 .error(function(){
                     console.log('Error loading page');
                 })
+            */
+            $.ajax({
+                url: 'http://www.proindemniza.com/webapp/server.php',
+                data: data,
+                dataType: 'text' 
+                success: function(data) {
+                    $('#formulario-consulta').html('<h2>'+result+'</h2>');
+                },
+                error: function(error) {
+                    $('#formulario-consulta').html('<h3>Ha ocurrido un error</h3>');
+                }
+            });
+
+
             return false;
 
         });
